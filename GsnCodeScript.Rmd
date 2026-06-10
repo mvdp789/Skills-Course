@@ -19,7 +19,7 @@ library(tidyverse)
 library(dplyr)
 ```
 
-
+Typhoon Leaf Scans:
 
 ```{r}
 #Leaf Scans
@@ -71,6 +71,7 @@ meanFDG
 
 ```
 
+Statistics for the Typhoon Leaf Scans: ANOVA and Tukey t-tests. 
 
 ```{r}
 #H0: there is no significant difference in the level of fluorescence between the empty vector- and the glycosyrin-infiltrated leaf sections.
@@ -126,7 +127,7 @@ t #The p-values for the tests between FDG alone and Gsn and EV and Gsn are both 
 
 ```
 
-Graph:
+Graph of the FDG Assay Results:
 ```{r}
 #Graphing the results from the Typhoon scanning.
 #Creating a theme to be used throughout the graphs:
@@ -146,7 +147,7 @@ my_theme <- function(){
 
 
 
-new_palette <- c("#009C59", "#00F92D", "#184A00")
+new_palette <- c("#009C59", "#184A00", "#00F92D")
 names(new_palette) <- levels(dataChanged2$Group)
 
 
@@ -183,14 +184,11 @@ view(dataChanged)
 ```
 
 Ponceau:
+
 ```{r}
 #Lectin Blots
 #Confirm the assumption that there is not a significant difference in the level of protein loaded onto the gels.
 #HA: for each of the lectin blots, there is a significant increase in binding with glycosyrin relative to the empty vector control. Adjust for the background.
-```
-
-
-```{r}
 #Ponceau
 #RCAI
 #H0: there is no difference in the level of protein between EV and Gsn on the Western blots. 
