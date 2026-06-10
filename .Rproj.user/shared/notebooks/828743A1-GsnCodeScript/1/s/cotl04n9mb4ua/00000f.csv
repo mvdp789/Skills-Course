@@ -1,6 +1,6 @@
 "0","#RCAI about 50kDa. "
 "0",""
-"0","RCAIshorter <- read.csv(""RCAIveryshort.csv"")"
+"0","RCAIshorter <- read.csv(""FilesforCode/RCAIveryshort.csv"")"
 "0","View(RCAIshorter)"
 "0","background <- RCAIshorter$Area[4]"
 "0","background"

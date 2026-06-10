@@ -24,7 +24,7 @@ Typhoon Leaf Scans:
 ```{r}
 #Leaf Scans
 #Adjusting the mean values to account for background effects.
-data1 <- read.csv("THEACTUALRESULTS.csv")
+data1 <- read.csv("FilesforCode/THEACTUALRESULTS.csv")
 summary(data1)
 length(data1$Value)
 adjusted <- vector(mode = "numeric", length = length(data1$Value))
@@ -193,7 +193,7 @@ Ponceau:
 #RCAI
 #H0: there is no difference in the level of protein between EV and Gsn on the Western blots. 
 #A two-sample t-test because there are only two groups, and every sample came from a different plant, so samples are independent and not paired. 
-RCAIPon <- read.csv("RCAIPonceauLongSum4567and8andthesummedonesarebackground.csv")
+RCAIPon <- read.csv("FilesforCode/RCAIPonceauLongSum4567and8andthesummedonesarebackground.csv")
 
 View(RCAIPon)
 background <- sum(RCAIPon$Area[4:8])
@@ -223,21 +223,21 @@ t
 #The p-value (0.0492) is less than 0.05, but only just, so considering 0.05 is an arbitrary threshold I am not too concerned about this result.This could be due to the small puncture in the gel, perhaps.
 
 #Excluding the puncture wound:
-row1 <- read.csv("RCAIPonceauRow1.csv")
+row1 <- read.csv("FilesforCode/RCAIPonceauRow1.csv")
 View(row1)
 EV1 <- c(row1$Area[1:3])
 Gsn1 <- c(row1$Area[4:6])
 t1 <- t.test(EV1, Gsn1, alternative = "two.sided", var.equal = TRUE)
 t1 #p-value = 0.3688.
 
-row2 <- read.csv("RCAIPonceauRow2.csv")
+row2 <- read.csv("FilesforCode/RCAIPonceauRow2.csv")
 View(row2)
 EV2 <- c(row2$Area[1:3])
 Gsn2 <- c(row2$Area[4:6])
 t2 <- t.test(EV2, Gsn2, alternative = "two.sided", var.equal = TRUE)
 t2 #p-value = 0.4854. 
 
-row3 <- read.csv("RCAIPonceauRow3.csv")
+row3 <- read.csv("FilesforCode/RCAIPonceauRow3.csv")
 View(row3)
 EV3 <- c(row3$Area[1:3])
 Gsn3 <- c(row3$Area[4:6])
@@ -251,7 +251,7 @@ t3 #p-value = 0.5562.
 ```{r}
 #Ponceau
 #ConA
-ConAPon <- read.csv("ConAPonceauLong4isbackgroundSum5and6.csv")
+ConAPon <- read.csv("FilesforCode/ConAPonceauLong4isbackgroundSum5and6.csv")
 
 View(ConAPon)
 background <- ConAPon$Area[4]
@@ -291,7 +291,7 @@ Lectin Blots:
 #Lectin blot
 #RCAI
 #Two sample t-test because each lane represents the apoplastic proteome from a plant infiltrated with either EV or Gsn, so each sample is independent. 
-WestRCAI <- read.csv("RCAILong.csv")
+WestRCAI <- read.csv("FilesforCode/RCAILong.csv")
 View(WestRCAI)
 
 background <- WestRCAI$Area[4]
@@ -330,7 +330,7 @@ tRCAI
 
 
 ```{r}
-ConAshort <- read.csv("conA30kDa.csv")
+ConAshort <- read.csv("FilesforCode/conA30kDa.csv")
 View(ConAshort)
 background <- ConAshort$Area[4]
 background
@@ -366,7 +366,7 @@ tConAShort #t = -8.8253, df = 4, p-value = 0.0009098.
 ```{r}
 #RCAI about 50kDa. 
 
-RCAIshorter <- read.csv("RCAIveryshort.csv")
+RCAIshorter <- read.csv("FilesforCode/RCAIveryshort.csv")
 View(RCAIshorter)
 background <- RCAIshorter$Area[4]
 background

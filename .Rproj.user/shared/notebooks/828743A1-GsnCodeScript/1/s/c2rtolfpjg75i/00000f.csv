@@ -1,6 +1,6 @@
 "0","#Ponceau"
 "0","#ConA"
-"0","ConAPon <- read.csv(""ConAPonceauLong4isbackgroundSum5and6.csv"")"
+"0","ConAPon <- read.csv(""FilesforCode/ConAPonceauLong4isbackgroundSum5and6.csv"")"
 "0",""
 "0","View(ConAPon)"
 "0","background <- ConAPon$Area[4]"

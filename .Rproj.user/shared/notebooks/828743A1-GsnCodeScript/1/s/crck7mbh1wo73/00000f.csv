@@ -1,7 +1,7 @@
 "0","#Lectin blot"
 "0","#RCAI"
 "0","#Two sample t-test because each lane represents the apoplastic proteome from a plant infiltrated with either EV or Gsn, so each sample is independent. "
-"0","WestRCAI <- read.csv(""RCAILong.csv"")"
+"0","WestRCAI <- read.csv(""FilesforCode/RCAILong.csv"")"
 "0","View(WestRCAI)"
 "0",""
 "0","background <- WestRCAI$Area[4]"
