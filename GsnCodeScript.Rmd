@@ -86,10 +86,18 @@ dataChanged <- dataChanged %>% group_by(Group)
 View(dataChanged)
 
 #Calculating mean, standard error and standard deviation.
+
+#This section was based off the code provided in the Data Handling and Graphing in R PPT in the skills course workshop.
 dataChanged2 <- dataChanged %>% summarise(stanDev <- sd(adjusted_results, na.rm = TRUE),
                                           n = n(),
                                         se_value= sd(adjusted_results, na.rm = TRUE)/sqrt(n), 
                                         mean_value = mean(adjusted_results))
+####End of section.
+
+
+
+
+
 View(dataChanged2)
 View(dataChanged)
 
@@ -152,6 +160,7 @@ names(new_palette) <- levels(dataChanged2$Group)
 
 
 #A version of the graph with the data points included:
+#This graph was partly based off the code provided in the Data Handling and Graphing in R PPT in the skills course workshop, but with my own theme, palette, subtitle/captions, the datapoints etc..
 (typhoon_box <- ggplot(dataChanged2, aes(x = Group, y = mean_value)) +
    geom_bar(position = "dodge", stat = "identity", aes(fill = Group)) +
    geom_errorbar(aes(ymin = (mean_value - (2*se_value)),
@@ -391,182 +400,4 @@ tRCAIshorter #t = -2.4768, df = 4, p-value = 0.06845.
 ```
 
 
-```{r} 
-#Graphing the RCAI long blot:
-
-
-
-
-evvector <- c(1, 2, 3)
-evgraph1 <- WestRCAIAdj %>% filter(X == evvector)
-View(WestRCAIAdj)
-
-rcaigraphev <- evgraph1 %>% summarise(stanDev <- sd(adjAreaWest, na.rm = TRUE),
-                                          n = n(),
-                                        se_value= sd(adjAreaWest, na.rm = TRUE)/sqrt(n), 
-                                        mean_value = mean(adjAreaWest))
-
-gsnvector1 <- c(5, 6, 7)
-gsngraph1 <- WestRCAIAdj %>% filter(X == gsnvector1)
-View(gsngraph1)
-
-rcaigraphgsn <- gsngraph1 %>% summarise(stanDev <- sd(adjAreaWest, na.rm = TRUE),
-                                          n = n(),
-                                        se_value= sd(adjAreaWest, na.rm = TRUE)/sqrt(n), 
-                                        mean_value = mean(adjAreaWest))
-View(rcaigraphev)
-View(rcaigraphgsn)
-
-rcaijoined <- full_join(rcaigraphev, rcaigraphgsn)
-rcaijoined <- rcaijoined %>% mutate(Group = c("Empty Vector", "Glycosyrin"))
-
-WestRCAIAdj <- WestRCAIAdj %>% mutate(Group = case_when(
-  X == c(1, 2, 3) ~ "Empty Vector",
-  X == c(5, 6, 7) ~ "Glycosyrin"
-))
-View(WestRCAIAdj)
-
-(rcailonggraph <- ggplot(rcaijoined, aes(x = Group, y = mean_value)) +
-   geom_bar(position = "dodge", stat = "identity", aes(fill = Group)) +
-   geom_errorbar(aes(ymin = (mean_value - (2*se_value)),
-                     ymax = (mean_value + (2*se_value)),
-                     width = 0.2),
-                 size = 1.6,
-                     position = position_dodge(0.7)) +
-    geom_point(aes(x = Group, y = adjAreaWest), size = 6, WestRCAIAdj) +
-  xlab("\nTreatment") +
-  ylab("Level of RCAI Binding (16-bit Greyscale)\n") + 
-    my_theme()+
-    theme(axis.text = element_text(size = 26, colour = "black"),
-      axis.title = element_text(size = 32, face = "bold"))+
-    scale_y_continuous(limits = c(-4000, 106000)) +
-    scale_fill_manual(values = c("#009C59", "#184A00"))+
-  annotate("segment", x = 1, xend= 1, y = 100000, yend = 97000, size = 1.6) +
-  annotate("segment", x = 2, xend = 2, y = 100000, yend = 97000, size = 1.6) +
-  annotate("segment", x = 1, xend = 2, y = 100000, yend = 100000, size = 1.6) +
-    annotate("text", x = 1.5, y = 103000, label = "NS p-value = 0.2303", size = 16))
-  
-
-ggsave("RCAIlonggraph.png", width = 14, height = 12, dpi = 300)
-```
-
-
-```{r} 
-#Making the ConA graph.
-View(ShortConAAdj)
-evvector <- c(1, 2, 3)
-evgraph <- ShortConAAdj %>% filter(X == evvector)
-View(evgraph)
-
-conagraphev <- evgraph %>% summarise(stanDev <- sd(adjAreaWest1, na.rm = TRUE),
-                                          n = n(),
-                                        se_value= sd(adjAreaWest1, na.rm = TRUE)/sqrt(n), 
-                                        mean_value = mean(adjAreaWest1))
-
-gsnvector <- c(5, 6, 7)
-gsngraph <- ShortConAAdj %>% filter(X == gsnvector)
-View(gsngraph)
-
-conagraphgsn <- gsngraph %>% summarise(stanDev <- sd(adjAreaWest1, na.rm = TRUE),
-                                          n = n(),
-                                        se_value= sd(adjAreaWest1, na.rm = TRUE)/sqrt(n), 
-                                        mean_value = mean(adjAreaWest1))
-View(conagraphev)
-View(conagraphgsn)
-
-ConAjoined <- full_join(conagraphev, conagraphgsn)
-ConAjoined <- ConAjoined %>% mutate(Group = c("Empty Vector", "Glycosyrin"))
-
-ShortConAAdj <- ShortConAAdj %>% mutate(Group = case_when(
-  X == c(1, 2, 3) ~ "Empty Vector",
-  X == c(5, 6, 7) ~ "Glycosyrin"
-))
-View(ShortConAAdj)
-
-(lectingraph <- ggplot(ConAjoined, aes(x = Group, y = mean_value)) +
-   geom_bar(position = "dodge", stat = "identity", aes(fill = Group)) +
-   geom_errorbar(aes(ymin = (mean_value - (2*se_value)),
-                     ymax = (mean_value + (2*se_value)),
-                     width = 0.2),
-                 size = 1.7,
-                     position = position_dodge(0.7)) +
-    geom_point(aes(x = Group, y = adjAreaWest1), size = 6, ShortConAAdj) +
-  xlab("\nTreatment") +
-  ylab("\nLevel of ConA Binding (16-bit Greyscale)\n") + 
-    my_theme()+
-    theme(axis.text = element_text(size = 26, colour = "black"),
-      axis.title = element_text(size = 32, face = "bold")) +
-    scale_y_continuous(limits = c(-4000, 106000)) +
-    scale_fill_manual(values = c("#009C59", "#184A00")) +
-    annotate("segment", x = 1, xend= 1, y = 102500, yend = 101700, size = 1.6) +
-  annotate("segment", x = 2, xend = 2, y = 102500, yend = 101700, size = 1.6) +
-  annotate("segment", x = 1, xend = 2, y = 102500, yend = 102500, size = 1.6) +
-    annotate("text", x = 1.5, y = 105000, label = "* p-value = 0.00091", just = "centre", size = 16)) 
-ggsave("ConAgraph.png", width = 14, height = 12, dpi = 300)
-```
-
-
-```{r} 
-#Making a graph for the shorter RCAI blot.
-View(ShorterRCAIAdj)
-evvector <- c(1, 2, 3)
-evgraph2 <- ShorterRCAIAdj %>% filter(X == evvector)
-View(ShorterRCAIAdj)
-
-rcaishortgraphev <- evgraph2 %>% summarise(stanDev <- sd(adjAreaWest1, na.rm = TRUE),
-                                          n = n(),
-                                        se_value= sd(adjAreaWest1, na.rm = TRUE)/sqrt(n), 
-                                        mean_value = mean(adjAreaWest1))
-
-gsnvector1 <- c(5, 6, 7)
-gsngraph2 <- ShorterRCAIAdj %>% filter(X == gsnvector1)
-View(gsngraph2)
-
-rcaishortgraphgsn <- gsngraph2 %>% summarise(stanDev <- sd(adjAreaWest1, na.rm = TRUE),
-                                          n = n(),
-                                        se_value= sd(adjAreaWest1, na.rm = TRUE)/sqrt(n), 
-                                        mean_value = mean(adjAreaWest1))
-View(rcaishortgraphev)
-View(rcaishortgraphgsn)
-
-rcaishortjoined <- full_join(rcaishortgraphev, rcaishortgraphgsn)
-rcaishortjoined <- rcaishortjoined %>% mutate(Group = c("Empty Vector", "Glycosyrin"))
-
-ShorterRCAIAdj <- ShorterRCAIAdj %>% mutate(Group = case_when(
-  X == c(1, 2, 3) ~ "Empty Vector",
-  X == c(5, 6, 7) ~ "Glycosyrin"
-))
-
-
-(rcaishortgraph <- ggplot(rcaishortjoined, aes(x = Group, y = mean_value)) +
-   geom_bar(position = "dodge", stat = "identity", aes(fill = Group)) +
-   geom_errorbar(aes(ymin = (mean_value - (2*se_value)),
-                     ymax = (mean_value + (2*se_value)),
-                     width = 0.2),
-                 size = 1.6,
-                     position = position_dodge(0.7)) +
-    geom_point(aes(x = Group, y = adjAreaWest1), size = 6, ShorterRCAIAdj) +
-  xlab("\nTreatment") +
-  ylab("Level of RCAI Binding (16-bit Greyscale)\n") + 
-    my_theme()+
-    theme(axis.text = element_text(size = 26, colour = "black"),
-      axis.title = element_text(size = 32, face = "bold"))+
-    scale_y_continuous(limits = c(-4000, 106000)) +
-    scale_fill_manual(values = c("#009C59", "#184A00"))+
-  annotate("segment", x = 1, xend= 1, y = 100000, yend = 97000, size = 1.6) +
-  annotate("segment", x = 2, xend = 2, y = 100000, yend = 97000, size = 1.6) +
-  annotate("segment", x = 1, xend = 2, y = 100000, yend = 100000, size = 1.6) +
-    annotate("text", x = 1.5, y = 103000, label = "NS p = 0.06845", size = 16))
-ggsave("RCAIshortgraph.png", width = 14, height = 12, dpi = 300)
-```
-
-
-```{r} 
-#Making a panel:
-library(gridExtra)
-library(grid)
-
-(panel <- grid.arrange(lectingraph + ggtitle("ConA") + theme(plot.title = element_text(size = 34)), rcailonggraph + ggtitle("RCAI Using the Whole Lanes") + theme(plot.title = element_text(size = 34)), rcaishortgraph + ggtitle("RCAI Using Proteins >= 50 kDa") + theme(plot.title = element_text(size = 34)), top = textGrob("\nLectin Blots: Glycosyrin Significantly Reduces the Activity of Glucosidases and/or Mannosidases, but not Galactosidases\n", gp = gpar(fontsize = 44, hjust = 0.5, fontface = "bold")), nrow = 1, ncol = 3, bottom = textGrob("Error Bars = +/-2 Standard Errors", gp = gpar(fontsize = 20, fontface = "italic"), just = "centre")))
-ggsave(panel, file = "panel.png", width = 36, height = 20, dpi = 300)
-```
 
