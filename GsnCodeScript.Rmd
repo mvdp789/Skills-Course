@@ -401,7 +401,7 @@ tRCAIshorter #t = -2.4768, df = 4, p-value = 0.06845.
 References and Acknowledgements for the Code:
 STHDA (No Date) Unpaired two-samples t test in R Available at: https://www.sthda.com/english/wiki/unpaired-two-samples-t-test-in-r (Accessed: 06/2026).
 Our Coding Club (No Date) Tutorials Available at: https://ourcodingclub.github.io/tutorials (Accessed: 06/2026).
-Nora's R workshop in the skills course was also useful. 
+Liu, N (2026) Data and Graphing in R.  
 
 ```{r}
 
