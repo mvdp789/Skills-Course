@@ -117,7 +117,7 @@ summary(anovaFDGPlant) #When the plant is also taken into account, R^2 = 0.8311,
 EVleaf <- dataChanged %>% filter(Group == "EV")
 Gsnleaf <- dataChanged %>% filter(Group == "Gsn")
 FDGleaf <- dataChanged %>% filter(Group == "FDG")
-shapiro.test(EVleaf$adjusted_results)
+shapiro.test(EVleaf$adjusted_results) # STHDA (No Date) for the code to check the assumption of normality. 
 shapiro.test(Gsnleaf$adjusted_results)
 shapiro.test(FDGleaf$adjusted_results)#The p-values are all above 0.05, so the distribution of the data is not significantly non-normal.
 #Homogeneity of variances:
@@ -130,7 +130,7 @@ tukey <- TukeyHSD(fdganova)
 tukey
 #Pairwise t-tests:
 t <- with(dataChanged, pairwise.t.test(adjusted_results, Group, p.adj = "none", pool.sd = FALSE))
-t #The p-values for the tests between FDG alone and Gsn and EV and Gsn are both < 0.05, so there is a significant difference between the relative levels of FDG in Gsn and the controls. The p-value for EV and FDG > 0.05 and is almost 1, as expected.#I did pairwise t-tests as well as the Tukey t-test to cover all bases, as using pool.sd = FALSE accounts for the unequal variances. I used p.adj = "none" as recommended in the workshop, which makes sense as well are only comparing three groups.#Pairwise t-test results FDG-EV = 0.944, Gsn-EV = 0.018 and FDG-Gsn = 0.036.
+t #The p-values for the tests between FDG alone and Gsn and EV and Gsn are both < 0.05, so there is a significant difference between the relative levels of FDG in Gsn and the controls. The p-value for EV and FDG > 0.05 and is almost 1, as expected.#I did pairwise t-tests as well as the Tukey t-test to cover all bases, as using pool.sd = FALSE accounts for the unequal variances. I used p.adj = "none" as recommended in the workshop, which makes sense as well are only comparing three groups. #Pairwise t-test results FDG-EV = 0.944, Gsn-EV = 0.018 and FDG-Gsn = 0.036.
 #Ultimately, the results of the Tukey t-test and pairwise t-tests corroborate one another.  
 
 ```
