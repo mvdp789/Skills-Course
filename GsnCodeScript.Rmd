@@ -219,7 +219,7 @@ View(RCAIPonAdj)
 RCAIPonAdj <- RCAIPonAdj[-c(4, 5, 6, 7, 8), ]
 EVPon <- c(RCAIPonAdj$adjArea[1:3])
 GsnPon <- c(RCAIPonAdj$adjArea[4:6])
-#Checking of assumptions
+#Checking of assumptions # STHDA (No Date) for the code to check the assumptions (Shapiro-Wilk test and F-test) and the two-sample t-test.
 #Is each sample normally distributed?
 shapiro.test(EVPon)
 shapiro.test(GsnPon) #The p-values for both are above 0.05, so the distribution of the data is not significantly non-normal.
